@@ -25,8 +25,9 @@ void counting_sort(int *array, size_t size)
 		count[i] = 0;
 	for (i = 0; i < (int)size; i++)
 		count[array[i]]++;
-	for (i = 1; i <= max; i++)
+	for (i = 1; i <= max; i++) /* prefix sum computation */
 		count[i] += count[i - 1];
+	print_array(count, max + 1); /* print count array after setup */
 	output = malloc(sizeof(int) * size);
 	if (!output)
 	{
@@ -35,12 +36,11 @@ void counting_sort(int *array, size_t size)
 	}
 	for (i = size - 1; i >= 0; i--)
 	{
-		output[count[array[i]] - 1] = array[i];
 		count[array[i]]--;
+		output[count[array[i]]] = array[i];
 	}
 	for (i = 0; i < (int)size; i++)
 		array[i] = output[i];
-	print_array(count, max + 1);
 	free(count);
 	free(output);
 }
